@@ -202,7 +202,7 @@ public class Graph {
         return dfs.indexOf(vertexList[b].label)!=-1;
     }
 
-    public void deyxtr(int v){
+    public void dijkstra(int v){
         int[] result = new int[nVerts];
         int[] obr=new int[nVerts];
 
@@ -272,7 +272,7 @@ public class Graph {
         }
     }
 
-    public void kosarayo(){
+    public void kosaraju(){
         clearAllVertexStatus();
         for (int i=0;i<nVerts;i++){
             if (!vertexList[i].wasVisited){

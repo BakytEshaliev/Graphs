@@ -73,7 +73,7 @@ public class Main {
         graph3.addDirectEdge(2,4,40);
         graph3.addDirectEdge(3,4,70);
         System.out.println("Алгоритм Дейкстры:");
-        graph3.deyxtr(0);
+        graph3.dijkstra(0);
 
         Graph graph4 = new Graph();
         graph4.addVertex('A');
@@ -118,6 +118,6 @@ public class Main {
         graph6.addDirectEdge(5,2,1);
         graph6.addDirectEdge(6,5,1);
         graph6.addDirectEdge(5,4,1);
-        graph6.kosarayo();
+        graph6.kosaraju();
     }
 }
