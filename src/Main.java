@@ -99,5 +99,25 @@ public class Main {
         graph5.addDirectEdge(2,0,30);
         System.out.println("Floyd2:");
         graph5.floyd();
+
+        Graph graph6 = new Graph();
+        graph6.addVertex('1');
+        graph6.addVertex('2');
+        graph6.addVertex('3');
+        graph6.addVertex('4');
+        graph6.addVertex('5');
+        graph6.addVertex('6');
+        graph6.addVertex('7');
+        graph6.addDirectEdge(0,1,1);
+        graph6.addDirectEdge(1,0,1);
+        graph6.addDirectEdge(0,3,1);
+        graph6.addDirectEdge(1,4,1);
+        graph6.addDirectEdge(2,1,1);
+        graph6.addDirectEdge(2,6,1);
+        graph6.addDirectEdge(4,3,1);
+        graph6.addDirectEdge(5,2,1);
+        graph6.addDirectEdge(6,5,1);
+        graph6.addDirectEdge(5,4,1);
+        graph6.kosarayo();
     }
 }

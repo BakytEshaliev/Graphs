@@ -6,16 +6,19 @@ public class Graph {
     private final int MAX_VERTS = 20;
     private Vertex vertexList[];
     private int adjMat[][];
+    private int reverseAdjMat[][];
     private int nVerts;
     private StackX stack = new StackX();
     private String dfsResult = "";
     private Queue queue = new Queue();
     private String bfsResult = "";
     private ArrayList<Edge> edges = new ArrayList<>();
+    private StackX stackK = new StackX();
 
     public Graph(){
         vertexList = new Vertex[MAX_VERTS];
         adjMat = new int[MAX_VERTS][MAX_VERTS];
+        reverseAdjMat = new int[MAX_VERTS][MAX_VERTS];
         nVerts = 0;
         for(int i=0;i<MAX_VERTS;i++){
             for(int j=0;j<MAX_VERTS;j++){
@@ -25,7 +28,7 @@ public class Graph {
     }
 
     public void addVertex(char label){
-        Vertex vertex = new Vertex(label);
+        Vertex vertex = new Vertex(label,nVerts);
         vertexList[nVerts]=vertex;
         nVerts++;
     }
@@ -38,6 +41,7 @@ public class Graph {
 
     public void addDirectEdge(int a,int b, int size){
         adjMat[a][b]=size;
+        reverseAdjMat[b][a]=size;
         edges.add(new Edge(a,b,size));
     }
 
@@ -47,6 +51,27 @@ public class Graph {
                 System.out.print(adjMat[j][i]+" ");
             }
             System.out.println();
+        }
+    }
+
+    public void dfsK(int v){
+        if(!vertexList[v].wasVisited) {
+            vertexList[v].wasVisited = true;
+            System.out.println(v+" pushed");
+           // stackK.push(v);
+            dfsResult+=vertexList[v].label;
+        }
+        System.out.println(v+" pushed");
+        stack.push(v);
+        int adjUnvisitedVertex=getAdjUnvisitedVertex(v);
+        if (adjUnvisitedVertex!=-1){
+            System.out.println("dfs:"+adjUnvisitedVertex);
+            dfs(adjUnvisitedVertex);
+        }
+        else{
+            stack.pop();
+            if(!stack.isEmpty())
+                dfs(stack.pop());
         }
     }
 
@@ -245,5 +270,56 @@ public class Graph {
             }
             System.out.println();
         }
+    }
+
+    public void kosarayo(){
+        clearAllVertexStatus();
+        for (int i=0;i<nVerts;i++){
+            if (!vertexList[i].wasVisited){
+                dfs(i);
+                for (int j=dfsResult.length()-1;j>=0;j--){
+                    System.out.println("push "+indexOf(dfsResult.charAt(j)));
+                    stackK.push(indexOf(dfsResult.charAt(j)));
+                }
+                System.out.println(dfsResult);
+                dfsResult="";
+            }
+        }
+
+
+        dfsResult="";
+
+        clearAllVertexStatus();
+        adjMat=reverseAdjMat;
+
+        ArrayList<String> result = new ArrayList<>();
+
+
+        for (int i=0;i<nVerts;i++){
+            if (!stackK.isEmpty()) {
+                if (!vertexList[stackK.peek()].wasVisited) {
+                    dfs(stackK.pop());
+                    result.add(dfsResult);
+                    dfsResult = "";
+                } else {
+                    stackK.pop();
+                }
+            }
+        }
+
+        System.out.println();
+
+        System.out.println("kosarayo:");
+        System.out.println(result);
+
+        clearAllVertexStatus();
+    }
+
+    public int indexOf(char label){
+        for (int i=0;i<nVerts;i++){
+            if (vertexList[i].label==label)
+                return i;
+        }
+        return -1;
     }
 }

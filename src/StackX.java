@@ -15,7 +15,9 @@ public class StackX {
     }
 
     public int peek(){
-        return st[top];
+        if (!isEmpty())
+            return st[top];
+        return -1;
     }
 
     public boolean isEmpty(){
